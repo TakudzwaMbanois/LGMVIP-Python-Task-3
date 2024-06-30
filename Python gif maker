@@ -1,0 +1,25 @@
+from moviepy.editor import VideoFileClip
+from tkinter import filedialog, simpledialog, messagebox
+import tkinter as tk
+
+def fileopen():
+    filepath = filedialog.askopenfilename(title="enter title")
+
+    if filepath:
+        start = simpledialog.askfloat("input", "enter start")
+        finish = simpledialog.askfloat("input", "enter end")
+        clip = VideoFileClip(filepath)
+        subclip = clip.subclip(start, finish)
+        gifname = simpledialog.askstring("input", "enter gif name")
+        if gifname:
+            subclip.write_gif(gifname, fps=10, loop=0)
+        else:
+            messagebox.showerror("Error", "Please enter a valid gif name")
+
+root = tk.Tk()
+root.title("GIF Maker")
+
+button = tk.Button(root, text="Open File", command=fileopen)
+button.pack(pady=20)
+
+root.mainloop()
